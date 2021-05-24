@@ -1,8 +1,9 @@
 ## Task 2: Big Data challenge
 
 #### Requirements:
-- python3 -m pip install -U awscli --user
-- python3 -m pip install -U ibm-cos-sdk --user
+- python3 -m pip install -U [awscli](https://github.com/aws/aws-cli) --user
+- python3 -m pip install -U [ibm-cos-sdk](https://ibm.github.io/ibm-cos-sdk-python/) --user
+- python3 -m pip install -U [lithops](https://lithops-cloud.github.io/getting-started/) --user
 
 [This task](https://github.com/a-ppi/SD-task2/blob/master/pdf/hackathon.pdf) is related to the European Research project [CloudButon.eu](http://cloudbuton.eu/). The project is developing novel Cloud technologies aiming to democratize Big Data applications in the Cloud. The CloudButton project has created the lithops.cloud toolkit that will be used to implement the Big Data challenge.
 

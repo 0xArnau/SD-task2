@@ -40,13 +40,13 @@ def data_tweets(tweet_dict: dict):
             if not status.retweeted_status.full_text == '':
                 tweet_dict_data['date'].append(str(status.created_at))
                 tweet_dict_data['geo'].append('ES:' + str(status.coordinates))
-                tweet_dict_data['url'].append('https://twitter.com/twitter/statuses/' + str(id))
+                tweet_dict_data['url'].append('https://twitter.com/twitter/statuses/' + str(IDtw))
                 tweet_dict_data['sentiment_Analysis'].append(status.retweeted_status.full_text)
         except AttributeError:  # Not a Retweet
             if not status.full_text == '':
                 tweet_dict_data['date'].append(str(status.created_at))
                 tweet_dict_data['geo'].append('ES:' + str(status.coordinates))
-                tweet_dict_data['url'].append('https://twitter.com/twitter/statuses/' + str(id))
+                tweet_dict_data['url'].append('https://twitter.com/twitter/statuses/' + str(IDtw))
                 tweet_dict_data['sentiment_Analysis'].append(status.full_text)
 
     return pandas.DataFrame(tweet_dict_data)

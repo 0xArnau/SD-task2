@@ -17,15 +17,15 @@ In groups of 2 or three persons, you will create a distributed system using Clou
 
 To build the system, you will leverage the Lithops.cloud toolkit developed in CloudButton. This toolkit enables to launch processes in the Cloud over Cloud Functions, and to store data in Cloud Object Storage. We will provide training and examples of how to use this toolkit.
 
-Stage 1: Data crawler. Massively parallel functions crawling data and storing it in Cloud Object Storage. Obtain information from web pages or tweets and create a dataset of text data. Use FaaS backend in lithops to launch crawling process over serverless functions.
+- Stage 1: Data crawler. Massively parallel functions crawling data and storing it in Cloud Object Storage. Obtain information from web pages or tweets and create a dataset of text data. Use FaaS backend in lithops to launch crawling process over serverless functions.
 
-Stage 2: Data preprocessing stage to produce structured data in csv format also stored in Cloud Object Storage. As columns in the csv file we suggest date, geographic location, url, and sentiment analysis.
+- Stage 2: Data preprocessing stage to produce structured data in csv format also stored in Cloud Object Storage. As columns in the csv file we suggest date, geographic location, url, and sentiment analysis.
 
 This stage should ensure the consistency of data accessed and updated to csv files. Note that Object Storage does not provide consistent modification of objects in buckets. You need an addressable, consistent, and fault-tolerant stateful entity to access the structured data for modification, or query purposes.
 
 Propose a distributed architecture guaranteeing scaling transparency, location transparency, failure transparency, and concurrency transparency.
 
-Stage 3: Python notebook: Demonstrate simple queries in Python notebooks over your data. In particular, apply sentiment analysis to data in different dates and periods and generate simple plots. Enable search queries over the data.
+- Stage 3: Python notebook: Demonstrate simple queries in Python notebooks over your data. In particular, apply sentiment analysis to data in different dates and periods and generate simple plots. Enable search queries over the data.
 
 **Example projects:**
 

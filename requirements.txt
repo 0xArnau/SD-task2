@@ -1,0 +1,4 @@
+awscli
+ibm-cos-sdk
+lithops
+tweepy

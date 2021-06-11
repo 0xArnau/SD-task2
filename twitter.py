@@ -8,30 +8,26 @@ auth.set_access_token(config['tweepy']['ACCESS_TOKEN'], config['tweepy']['ACCESS
 api = tweepy.API(auth)
 
 #Initialize a dictionary where we will save all the tweets in order to avoid repeated
-tweet_dict = {}
-tweet_dict_data = {
-    'date': [],
-    'geo': [],
-    'url': [],
-    'sentiment_Analysis': [],       #sentiment analysis
-}
-
-
 def search_tweets(count):
-    for i in range(count):
-        tweet = api.search(q="Covid,coronavirus", geocode="41.8204600,1.8676800,300km", lang="es", count=5, result_type="recent", tweet_mode="extended", include_entities="false")
-    
+    tweet_dict = {}
+    for _ in range(count):
+        tweet = api.search(q="Covid,coronavirus", geocode="41.8204600,1.8676800,300km", lang="es", count=100, result_type="recent", tweet_mode="extended", include_entities="false")
         for tw in tweet:
             id = tw.id
             status = api.get_status(id, tweet_mode = "extended")
             if id not in tweet_dict.keys():
                 tweet_dict[id] = status
-    #for x in tweet_dict:
-    #    print(f'ID: {x} --> {tweet_dict[x]}')
+    return tweet_dict
 
 
 #search tweets with a specific gelocation, language an words
-def data_tweets():
+def data_tweets(tweet_dict: dict):
+    tweet_dict_data = {
+    'date': [],
+    'geo': [],
+    'url': [],
+    'sentiment_Analysis': [],       #sentiment analysis
+    }
     for IDtw in tweet_dict:
         status = tweet_dict[IDtw]
         try:
@@ -50,8 +46,7 @@ def data_tweets():
     return pandas.DataFrame(tweet_dict_data)
 
 #Write csv
-search_tweets(1)
-df = data_tweets()
+df = data_tweets(search_tweets(1))  
 print(df)
 df.to_csv('data.csv')
             

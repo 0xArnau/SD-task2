@@ -2,6 +2,12 @@ import tweepy
 import pandas
 from config.config import config
 
+
+#
+# Executar-ho cops al dia per crear arxius csv, juntar-ho en un i penjar-ho al clud
+#
+
+
 auth = tweepy.OAuthHandler(config['tweepy']['API_KEY'], config['tweepy']['API_SECRET_KEY'])
 auth.set_access_token(config['tweepy']['ACCESS_TOKEN'], config['tweepy']['ACCESS_SECRET_TOKEN'])
 
@@ -33,20 +39,19 @@ def data_tweets(tweet_dict: dict):
         try:
             if not status.retweeted_status.full_text == '':
                 tweet_dict_data['date'].append(str(status.created_at))
-                tweet_dict_data['geo'].append('ES')
+                tweet_dict_data['geo'].append('ES:' + str(status.coordinates))
                 tweet_dict_data['url'].append('https://twitter.com/twitter/statuses/' + str(id))
                 tweet_dict_data['sentiment_Analysis'].append(status.retweeted_status.full_text)
         except AttributeError:  # Not a Retweet
             if not status.full_text == '':
                 tweet_dict_data['date'].append(str(status.created_at))
-                tweet_dict_data['geo'].append('ES')
+                tweet_dict_data['geo'].append('ES:' + str(status.coordinates))
                 tweet_dict_data['url'].append('https://twitter.com/twitter/statuses/' + str(id))
                 tweet_dict_data['sentiment_Analysis'].append(status.full_text)
 
     return pandas.DataFrame(tweet_dict_data)
 
 #Write csv
-df = data_tweets(search_tweets(1))  
-print(df)
+df = data_tweets(search_tweets(1))
 df.to_csv('data.csv')
             

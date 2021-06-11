@@ -10,9 +10,13 @@ if __name__ == "__main__":
 
    
     # Get the last name & add 1
-    next = (storage.list_keys(config['lithops']['storage_bucket'])[-1][4:8])
-    next = (f"data{int(next) + 1:04d}.csv")
-    
+    next = (storage.list_keys(config['lithops']['storage_bucket']))
+    if next == []:
+        next = 'data0001.csv'
+    else:
+        next = next[-1][4:8]
+        next = (f"data{int(next) + 1:04d}.csv")
+        
     storage.put_object(bucket='urv.sd.task2',
                        key=next,
                        body=df)

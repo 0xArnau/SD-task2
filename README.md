@@ -5,6 +5,7 @@
 - python3 -m pip install -U [lithops](https://lithops-cloud.github.io/getting-started/) --user
 - pip install [tweepy](https://docs.tweepy.org/en/latest/index.html)
 - pip install [pandas](https://pandas.pydata.org/)
+- pip install [sentiment-analysis-spanish](https://pypi.org/project/sentiment-analysis-spanish/) [keras](https://www.tensorflow.org/) [tensorflow](https://keras.io/)
 
 ## Task 2: Big Data challenge
 

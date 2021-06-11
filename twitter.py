@@ -17,7 +17,7 @@ api = tweepy.API(auth)
 def search_tweets(count):
     tweet_dict = {}
     for _ in range(count):
-        tweet = api.search(q="Covid,coronavirus", geocode="41.8204600,1.8676800,300km", lang="es", count=100, result_type="recent", tweet_mode="extended", include_entities="false")
+        tweet = api.search(q="Covid,coronavirus", geocode="41.8204600,1.8676800,300km", lang="es", count=5, result_type="recent", tweet_mode="extended", include_entities="false")
         for tw in tweet:
             id = tw.id
             status = api.get_status(id, tweet_mode = "extended")
@@ -32,7 +32,7 @@ def data_tweets(tweet_dict: dict):
     'date': [],
     'geo': [],
     'url': [],
-    'sentiment_Analysis': [],       #sentiment analysis
+    'text': []       
     }
     for IDtw in tweet_dict:
         status = tweet_dict[IDtw]
@@ -41,13 +41,13 @@ def data_tweets(tweet_dict: dict):
                 tweet_dict_data['date'].append(str(status.created_at))
                 tweet_dict_data['geo'].append('ES:' + str(status.coordinates))
                 tweet_dict_data['url'].append('https://twitter.com/twitter/statuses/' + str(IDtw))
-                tweet_dict_data['sentiment_Analysis'].append(status.retweeted_status.full_text)
+                tweet_dict_data['text'].append(status.retweeted_status.full_text)
         except AttributeError:  # Not a Retweet
             if not status.full_text == '':
                 tweet_dict_data['date'].append(str(status.created_at))
                 tweet_dict_data['geo'].append('ES:' + str(status.coordinates))
                 tweet_dict_data['url'].append('https://twitter.com/twitter/statuses/' + str(IDtw))
-                tweet_dict_data['sentiment_Analysis'].append(status.full_text)
+                tweet_dict_data['text'].append(status.full_text)
 
     return pandas.DataFrame(tweet_dict_data)
 

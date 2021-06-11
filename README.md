@@ -4,6 +4,7 @@
 - python3 -m pip install -U [ibm-cos-sdk](https://ibm.github.io/ibm-cos-sdk-python/) --user
 - python3 -m pip install -U [lithops](https://lithops-cloud.github.io/getting-started/) --user
 - pip install [tweepy](https://docs.tweepy.org/en/latest/index.html)
+- pip install [pandas](https://pandas.pydata.org/)
 
 ## Task 2: Big Data challenge
 

@@ -1,18 +1,18 @@
 import tweepy
 import pandas as pd
-from config.config import config
+import json
+#from config.config import config
 
 
-
-def search_tweets(api, count: int, queries: str) -> dict:
+def search_tweets(api, queries: str) -> dict:
     tweet_dict = {}
-    for _ in range(count):
-        tweet = api.search(q=queries, geocode="41.8204600,1.8676800,300km", lang="es", count=count, result_type="recent", tweet_mode="extended", include_entities="false")
-        for tw in tweet:
-            id = tw.id
-            status = api.get_status(id, tweet_mode = "extended")
-            if id not in tweet_dict.keys():
-                tweet_dict[id] = status
+    #for _ in range(count):
+    tweet = api.search(q=queries, lang="es", count=1, result_type="recent", tweet_mode="extended", include_entities="false")
+    for tw in tweet:
+        id = tw.id
+        status = api.get_status(id, tweet_mode = "extended")
+        if id not in tweet_dict.keys():
+            tweet_dict[id] = status
     return tweet_dict
 
 def select_data(tweet_dict: dict):
@@ -41,10 +41,11 @@ def select_data(tweet_dict: dict):
 
 
 if __name__ == "__main__":
-  print('Data Crawling')
-  auth = tweepy.OAuthHandler(config['tweepy']['API_KEY'], config['tweepy']['API_SECRET_KEY'])
-  auth.set_access_token(config['tweepy']['ACCESS_TOKEN'], config['tweepy']['ACCESS_SECRET_TOKEN'])
+    from config.config import config
+    print('Data Crawling')
+    auth = tweepy.OAuthHandler(config['tweepy']['API_KEY'], config['tweepy']['API_SECRET_KEY'])
+    auth.set_access_token(config['tweepy']['ACCESS_TOKEN'], config['tweepy']['ACCESS_SECRET_TOKEN'])
 
-  api = tweepy.API(auth)
+    api = tweepy.API(auth)
 
-  print(select_data(search_tweets(api, 1, "Coronavirus")))
+    print(select_data(search_tweets(api, 1, "Coronavirus")))

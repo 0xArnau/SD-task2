@@ -1,5 +1,5 @@
 from lithops import Storage
-from config.config import config
+#from config.config import config
 import pandas
 
 class cosBackend:

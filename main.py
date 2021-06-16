@@ -4,10 +4,8 @@ import data_crawling as dc
 #import data_preprocessing as dp
 from config.config import config
 
+from backend import cosBackend
 
-
-def my_function(x):
-    return x + 7
 
 
 if __name__ == '__main__':
@@ -17,9 +15,16 @@ if __name__ == '__main__':
     
     fexec = lithops.FunctionExecutor(config=config,runtime='arppi/sd-lithops-custom-runtime-38:0.3')
     
-    data = (api, "corona")
-    fexec.call_async(dc.search_tweets,data)
-    #fexec.call_async(my_function, 3)
-    print(fexec.get_result())
+    cos = cosBackend(config)
 
+    fexec.call_async(dc.search_tweets,(api, 100,"coronavirus"))
+    cos.put_object(prefix='coronavirus', name='', ext='csv', body=fexec.get_result().to_string())
 
+    fexec.call_async(dc.search_tweets,(api, 100,"covid19"))
+    cos.put_object(prefix='covid19', name='', ext='csv', body=fexec.get_result().to_string())
+
+    fexec.call_async(dc.search_tweets,(api, 100,"covid-19"))
+    cos.put_object(prefix='covid-19', name='', ext='csv', body=fexec.get_result().to_string())
+
+    fexec.call_async(dc.search_tweets,(api, 100,"SARS-CoV-2"))
+    cos.put_object(prefix='SARS-CoV-2', name='', ext='csv', body=fexec.get_result().to_string())

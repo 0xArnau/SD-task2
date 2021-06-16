@@ -1,19 +1,17 @@
 import tweepy
 import pandas as pd
-import json
-#from config.config import config
 
 
-def search_tweets(api, queries: str) -> dict:
+def search_tweets(api, count: int, queries: str):
     tweet_dict = {}
     #for _ in range(count):
-    tweet = api.search(q=queries, lang="es", count=1, result_type="recent", tweet_mode="extended", include_entities="false")
+    tweet = api.search(q=queries, lang="es", count=count, result_type="recent", tweet_mode="extended", include_entities="false")
     for tw in tweet:
         id = tw.id
         status = api.get_status(id, tweet_mode = "extended")
         if id not in tweet_dict.keys():
             tweet_dict[id] = status
-    return tweet_dict
+    select_data(tweet_dict)
 
 def select_data(tweet_dict: dict):
     tweet_dict_data = {
@@ -48,4 +46,4 @@ if __name__ == "__main__":
 
     api = tweepy.API(auth)
 
-    print(select_data(search_tweets(api, 1, "Coronavirus")))
+    print(search_tweets(api,1, "Coronavirus"))

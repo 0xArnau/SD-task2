@@ -13,11 +13,11 @@ class cosBackend:
     def list_keys(self, prefix):
         return self.storage.list_keys(self.config['lithops']['storage_bucket'], prefix=prefix+'/')
 
-    def put_object(self, prefix, name, ext):
+    def put_object(self, prefix, name, ext, body):
         next = self.list_keys(prefix=prefix)
         
         if next == []:
-            next = '{}/{}/0001.{}'.format(prefix, name, ext)
+            next = '{}/{}0001.{}'.format(prefix, name, ext)
         else:
             next = next[-1][-8:-4]
             next = (f"{prefix}/{name}{int(next) + 1:04d}.{ext}")
@@ -25,7 +25,7 @@ class cosBackend:
         self.storage.put_object(
             bucket='urv.sd.task2',
             key=next,
-            body=self.read_csv()
+            body=body
         )
 
 if __name__ == "__main__":

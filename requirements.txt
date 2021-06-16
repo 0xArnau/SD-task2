@@ -49,4 +49,8 @@ etcd3
 
 
 ####
-#sentiment_analysis_spanish
+tweepy
+sentiment_analysis_spanish
+sklearn
+keras
+tensorflow

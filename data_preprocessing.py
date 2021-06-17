@@ -1,6 +1,14 @@
 from sentiment_analysis_spanish import sentiment_analysis
 import pandas
 
+def sentiment_analysis(df):
+
+    sentiment = sentiment_analysis.SentimentAnalysisSpanish()
+    df['sentiment_analysis'] = df['text'].apply(lambda i: sentiment.sentiment(i))
+    return df
+
+
+
 if __name__ == "__main__":
   print('Data Preprocessing')
 

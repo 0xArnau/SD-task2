@@ -1,7 +1,5 @@
 from lithops import Storage
-#from config.config import config
 import pandas as pd
-from io import StringIO
 
 class cosBackend:
     def __init__(self, config):

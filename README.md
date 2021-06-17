@@ -5,7 +5,7 @@
 - pip install [lithops](https://lithops-cloud.github.io/getting-started/) 
 - pip install [tweepy](https://docs.tweepy.org/en/latest/index.html)
 - pip install [pandas](https://pandas.pydata.org/)
-- pip install [nltk](https://www.nltk.org/install.html) optional [numpy](https://numpy.org/install/) [sklearn](https://pypi.org/project/sklearn/)
+- pip install [nltk](https://www.nltk.org/install.html) [scikit-learn](https://scikit-learn.org/stable/install.html) [numpy](https://numpy.org/install/) [pandas](https://pandas.pydata.org/) [sklearn](https://pypi.org/project/sklearn/)
 
 ## Task 2: Big Data challenge
 

@@ -18,13 +18,13 @@ if __name__ == '__main__':
     cos = cosBackend(config)
 
     fexec.call_async(dc.search_tweets,(api, 100,"coronavirus"))
-    cos.put_object(prefix='coronavirus', name='', ext='csv', body=fexec.get_result().to_string())
+    cos.put_object(prefix='data', name='coronavirus:', ext='csv', body=fexec.get_result().to_string())
 
     fexec.call_async(dc.search_tweets,(api, 100,"covid19"))
-    cos.put_object(prefix='covid19', name='', ext='csv', body=fexec.get_result().to_string())
+    cos.put_object(prefix='data', name='covid19:', ext='csv', body=fexec.get_result().to_string())
 
     fexec.call_async(dc.search_tweets,(api, 100,"covid-19"))
-    cos.put_object(prefix='covid-19', name='', ext='csv', body=fexec.get_result().to_string())
+    cos.put_object(prefix='data', name='covid-19:', ext='csv', body=fexec.get_result().to_string())
 
     fexec.call_async(dc.search_tweets,(api, 100,"SARS-CoV-2"))
-    cos.put_object(prefix='SARS-CoV-2', name='', ext='csv', body=fexec.get_result().to_string())
+    cos.put_object(prefix='data', name='SARS-CoV-2:', ext='csv', body=fexec.get_result().to_string())

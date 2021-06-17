@@ -1,6 +1,7 @@
 from lithops import Storage
 #from config.config import config
-import pandas
+import pandas as pd
+from io import StringIO
 
 class cosBackend:
     def __init__(self, config):
@@ -8,7 +9,7 @@ class cosBackend:
         self.storage = Storage(config=config)
 
     def read_csv(self):
-        return pandas.read_csv('data.csv').to_string()
+        return pd.read_csv('data.csv').to_string()
 
     def list_keys(self, prefix):
         return self.storage.list_keys(self.config['lithops']['storage_bucket'], prefix=prefix+'/')
@@ -27,27 +28,17 @@ class cosBackend:
             key=next,
             body=body
         )
+    def get_object(self, key):
+        return self.storage.get_object(self.config['lithops']['storage_bucket'], key)
 
 if __name__ == "__main__":
-   klk = cosBackend(config=config)
-   klk.put_object('', 'data', 'txt')
-"""
-    df = pandas.read_csv('data.csv').to_string()
-    storage = Storage(config=config)
+    from config.config import config
 
-
-   
+    #df = pandas.read_csv('data.csv').to_string()
+    cos = cosBackend(config=config)
+ 
     # Get the last name & add 1
-    next = (storage.list_keys(config['lithops']['storage_bucket']))
-    if next == []:
-        next = 'data0001.csv'
-    else:
-        next = next[-1][-8:-4]
-        print(next)
-        next = (f"data{int(next) + 1:04d}.csv")
-        
-    storage.put_object(bucket='urv.sd.task2',
-                       key=next,
-                       body=df)
-"""  
+    next = (cos.list_keys(prefix='covid-19'))
+    print(next)
+ 
     

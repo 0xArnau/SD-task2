@@ -4,14 +4,13 @@ import pandas as pd
 
 def search_tweets(api, count: int, queries: str):
     tweet_dict = {}
-    #for _ in range(count):
     tweet = api.search(q=queries, lang="es", count=count, result_type="recent", tweet_mode="extended", include_entities="false")
     for tw in tweet:
         id = tw.id
         status = api.get_status(id, tweet_mode = "extended")
         if id not in tweet_dict.keys():
             tweet_dict[id] = status
-    select_data(tweet_dict)
+    return select_data(tweet_dict)
 
 def select_data(tweet_dict: dict):
     tweet_dict_data = {
@@ -35,7 +34,7 @@ def select_data(tweet_dict: dict):
                 tweet_dict_data['url'].append('https://twitter.com/twitter/statuses/' + str(IDtw))
                 tweet_dict_data['text'].append(status.full_text)
 
-    return pd.DataFrame(tweet_dict_data)
+    return (pd.DataFrame(tweet_dict_data))
 
 
 if __name__ == "__main__":

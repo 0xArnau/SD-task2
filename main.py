@@ -20,6 +20,8 @@ if __name__ == '__main__':
     
     cos = cosBackend(config)
     
+    #Stage 1
+
     """
     iterdata = [(api, 100,"coronavirus"), (api, 100,"covid19"), (api, 100,"covid-19"), (api, 100,"SARS-CoV-2")]
     
@@ -40,7 +42,9 @@ if __name__ == '__main__':
         i += 1
         print(tweet)
     
-    """
+    
+    #Stage 2
+    
     tweets = [ [] ]
    
     keys = cos.list_keys(prefix='data')
@@ -61,10 +65,24 @@ if __name__ == '__main__':
         dfObj = pd.DataFrame(tweet, columns = ['date' , 'time', 'geo', 'url', 'text'])
         df_sentiment = dp.sentiment_analysis(dfObj)
         cos.put_object(prefix='preprocess', name='', ext='csv', body=df_sentiment.to_string())
+    """
     
-    
+    #Stage 3
 
-        
+    all_tweets = []
+    process_keys = cos.list_keys(prefix='preprocess')
+   
+    for k in process_keys:
+        data = cos.get_object(k)
+        tw = data.decode()
+        for idk in tw.splitlines()[1:]:
+            all_tweets.append(idk.split(maxsplit=5))        #El camp de sentiment analysis es mostra junt amb el text
+            #countwords amb diccionari per cada paraula
+            #Fer el wordcloud
+            #Generar plots amb diferentes dates i afegir a notebooks
+            #Permetre buscar dades a partir de queries
+
+        print(all_tweets)
             
     
         

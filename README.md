@@ -1,8 +1,8 @@
 #### Requirements:
 
-- python3 -m pip install -U [awscli](https://github.com/aws/aws-cli) --user
-- python3 -m pip install -U [ibm-cos-sdk](https://ibm.github.io/ibm-cos-sdk-python/) --user
-- python3 -m pip install -U [lithops](https://lithops-cloud.github.io/getting-started/) --user
+- pip install [awscli](https://github.com/aws/aws-cli) 
+- pip install [ibm-cos-sdk](https://ibm.github.io/ibm-cos-sdk-python/) 
+- pip install [lithops](https://lithops-cloud.github.io/getting-started/) 
 - pip install [tweepy](https://docs.tweepy.org/en/latest/index.html)
 - pip install [pandas](https://pandas.pydata.org/)
 - pip install [nltk](https://www.nltk.org/install.html) optional [numpy](https://numpy.org/install/) [sklearn](https://pypi.org/project/sklearn/)

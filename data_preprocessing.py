@@ -1,20 +1,20 @@
-from sentiment_analysis_spanish import sentiment_analysis
+import nltk
+nltk.download('vader_lexicon')
+
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import pandas
 
+
+
 def sentiment_analysis(df):
-
-    sentiment = sentiment_analysis.SentimentAnalysisSpanish()
-    df['sentiment_analysis'] = df['text'].apply(lambda i: sentiment.sentiment(i))
-    return df
-
-
+	sid = SentimentIntensityAnalyzer()
+	df['sentiment_analysis'] = df['text'].apply(lambda i: sid.polarity_scores(i))
+	return df
 
 if __name__ == "__main__":
   print('Data Preprocessing')
-
   df = pandas.read_csv('data.csv')
+  df = (sentiment_analysis(df))
+  print(df)
+  
 
-  sentiment = sentiment_analysis.SentimentAnalysisSpanish()
-  df['sentiment_analysis'] = df['text'].apply(lambda i: sentiment.sentiment(i))
-
-  df.to_csv('data_with_sentiment.csv')

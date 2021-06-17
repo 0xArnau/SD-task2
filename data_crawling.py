@@ -4,7 +4,7 @@ import pandas as pd
 
 def search_tweets(api, count: int, queries: str):
     tweet_dict = {}
-    tweet = api.search(q=queries, lang="es", count=count, result_type="recent", tweet_mode="extended", include_entities="false")
+    tweet = api.search(q=queries, lang="en", count=count, result_type="recent", tweet_mode="extended", include_entities="false")
     for tw in tweet:
         id = tw.id
         status = api.get_status(id, tweet_mode = "extended")

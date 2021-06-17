@@ -14,9 +14,13 @@ if __name__ == '__main__':
     auth.set_access_token(config['tweepy']['ACCESS_TOKEN'], config['tweepy']['ACCESS_SECRET_TOKEN'])
     api = tweepy.API(auth)
     
-    fexec = lithops.FunctionExecutor(config=config,runtime='arppi/sd-lithops-custom-runtime-39:0.2')
+    
+    fexec = lithops.FunctionExecutor(config=config,runtime='arppi/sd-lithops-custom-runtime-39:0.3')
+    #fexec = lithops.FunctionExecutor(config=config,runtime='arppi/sd-lithops-custom-runtime-38:0.4')
+    
     cos = cosBackend(config)
-
+    
+    """
     iterdata = [(api, 100,"coronavirus"), (api, 100,"covid19"), (api, 100,"covid-19"), (api, 100,"SARS-CoV-2")]
     
     fexec.map(dc.search_tweets, iterdata)
@@ -32,20 +36,31 @@ if __name__ == '__main__':
     i = 0
     for tweet in result:
         print(f"\n{iterHashtag[i][0]}\n")
-        print("Put Object")
         cos.put_object(prefix=iterHashtag[i][0], name='', ext=iterHashtag[i][2], body=iterHashtag[i][3])
         i += 1
         print(tweet)
     
-        
-    '''
-    key = 'data/coronavirus/0002.csv'
-    print(key)
-    objects = cos.get_object(key)
-    s = objects.decode()
-    for sin in s.splitlines()[1:]:
-        print(sin.split(maxsplit=5))
-        '''
+    """
+    tweets = [ [] ]
+   
+    keys = cos.list_keys(prefix='data')
+    print(keys)
+
+    i = 0
+    for key in keys:
+        object = cos.get_object(key)
+        s = object.decode()
+        for sin in s.splitlines()[1:]:
+            if len(tweets[i]) == 1000:
+                i += 1
+                tweets.append([])
+
+            tweets[i].append(sin.split(maxsplit=5)[1:])
+    
+    for tweet in tweets:
+        dfObj = pd.DataFrame(tweet, columns = ['date' , 'time', 'geo', 'url', 'text'])
+        df_sentiment = dp.sentiment_analysis(dfObj)
+        cos.put_object(prefix='preprocess', name='', ext='csv', body=df_sentiment.to_string())
     
     
 

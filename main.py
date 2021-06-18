@@ -56,6 +56,7 @@ def stage2():
         iterdf.append(df_sentiment)
         #cos.put_object(prefix='preprocess', name='', ext='csv', body=df_sentiment.to_string())
     
+    iterdf[0].to_csv('data.csv')
     #print(f"Deleting: {keys}\n")
     #cos.delete_objects(keys)
 
@@ -108,6 +109,6 @@ if __name__ == '__main__':
     
     #stage1()
     stage2()
-    stage3()
+    #stage3()
     delete_lithop_objects()
    

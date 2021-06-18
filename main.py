@@ -9,7 +9,7 @@ import time
 from backend import cosBackend
 
 def stage1():
-    iterdata = [(api, 1,"coronavirus"), (api, 1,"covid19"), (api, 1,"covid-19"), (1, 100,"SARS-CoV-2")]
+    iterdata = [(api, 100,"coronavirus"), (api, 100,"covid19"), (api, 100,"covid-19"), (api, 100,"SARS-CoV-2")]
     
     fexec.map(dc.search_tweets, iterdata)
     result = (fexec.get_result())
@@ -26,7 +26,6 @@ def stage1():
         print(f"\n{iterHashtag[i][0]}\n")
         cos.put_object(prefix=iterHashtag[i][0], name='', ext=iterHashtag[i][2], body=iterHashtag[i][3])
         i += 1
-        print(tweet)
 
 def stage2():
     tweets = [ [] ]

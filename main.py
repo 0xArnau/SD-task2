@@ -8,22 +8,8 @@ import time
 
 from backend import cosBackend
 
-
-if __name__ == '__main__':
-    auth = tweepy.OAuthHandler(config['tweepy']['API_KEY'], config['tweepy']['API_SECRET_KEY'])
-    auth.set_access_token(config['tweepy']['ACCESS_TOKEN'], config['tweepy']['ACCESS_SECRET_TOKEN'])
-    api = tweepy.API(auth)
-    
-    
-    fexec = lithops.FunctionExecutor(config=config,runtime='arppi/sd-lithops-custom-runtime-39:0.3')
-    #fexec = lithops.FunctionExecutor(config=config,runtime='arppi/sd-lithops-custom-runtime-38:0.4')
-    
-    cos = cosBackend(config)
-    
-    #Stage 1
-
-    """
-    iterdata = [(api, 100,"coronavirus"), (api, 100,"covid19"), (api, 100,"covid-19"), (api, 100,"SARS-CoV-2")]
+def stage1():
+    iterdata = [(api, 1,"coronavirus"), (api, 1,"covid19"), (api, 1,"covid-19"), (1, 100,"SARS-CoV-2")]
     
     fexec.map(dc.search_tweets, iterdata)
     result = (fexec.get_result())
@@ -41,14 +27,11 @@ if __name__ == '__main__':
         cos.put_object(prefix=iterHashtag[i][0], name='', ext=iterHashtag[i][2], body=iterHashtag[i][3])
         i += 1
         print(tweet)
-    
-    
-    #Stage 2
-    
+
+def stage2():
     tweets = [ [] ]
    
     keys = cos.list_keys(prefix='data')
-    print(keys)
 
     i = 0
     for key in keys:
@@ -65,10 +48,35 @@ if __name__ == '__main__':
         dfObj = pd.DataFrame(tweet, columns = ['date' , 'time', 'geo', 'url', 'text'])
         df_sentiment = dp.sentiment_analysis(dfObj)
         cos.put_object(prefix='preprocess', name='', ext='csv', body=df_sentiment.to_string())
-    """
     
-    #Stage 3
+    print(f"Deleting: {keys}\n")
+    cos.delete_objects(keys)
 
+def stage3():
+    pass
+
+
+def delete_lithop_objects():
+    cos.delete_objects(keys=cos.list_keys(prefix='lithops.runtimes'))
+    cos.delete_objects(keys=cos.list_keys(prefix='lithops.runtime'))
+    cos.delete_objects(keys=cos.list_keys(prefix='lithops.jobs'))
+
+if __name__ == '__main__':
+    auth = tweepy.OAuthHandler(config['tweepy']['API_KEY'], config['tweepy']['API_SECRET_KEY'])
+    auth.set_access_token(config['tweepy']['ACCESS_TOKEN'], config['tweepy']['ACCESS_SECRET_TOKEN'])
+    api = tweepy.API(auth)
+    
+    
+    #fexec = lithops.FunctionExecutor(config=config,runtime='arppi/sd-lithops-custom-runtime-39:0.3')
+    fexec = lithops.FunctionExecutor(config=config,runtime='arppi/sd-lithops-custom-runtime-38:0.4')
+    
+    cos = cosBackend(config)
+    
+    stage1()
+    stage2()
+    delete_lithop_objects()
+    #Stage 3
+    """
     all_tweets = []
     process_keys = cos.list_keys(prefix='preprocess')
    
@@ -83,7 +91,7 @@ if __name__ == '__main__':
             #Permetre buscar dades a partir de queries
 
         print(all_tweets)
-            
+    """        
     
         
         

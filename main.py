@@ -1,12 +1,19 @@
+from wordcloud import WordCloud, STOPWORDS
+
 import lithops
 import tweepy
-import data_crawling as dc
-from config.config import config
 import pandas as pd
-import data_preprocessing as dp
-import time
+import matplotlib.pyplot as plt
 
+from config.config import config
 from backend import cosBackend
+
+import data_preprocessing as dp
+import data_crawling as dc
+import word_count as wc
+
+
+iterdf = []
 
 def stage1():
     iterdata = [(api, 100,"coronavirus"), (api, 100,"covid19"), (api, 100,"covid-19"), (api, 100,"SARS-CoV-2")]
@@ -46,13 +53,38 @@ def stage2():
     for tweet in tweets:
         dfObj = pd.DataFrame(tweet, columns = ['date' , 'time', 'geo', 'url', 'text'])
         df_sentiment = dp.sentiment_analysis(dfObj)
-        cos.put_object(prefix='preprocess', name='', ext='csv', body=df_sentiment.to_string())
+        iterdf.append(df_sentiment)
+        #cos.put_object(prefix='preprocess', name='', ext='csv', body=df_sentiment.to_string())
     
-    print(f"Deleting: {keys}\n")
-    cos.delete_objects(keys)
+    #print(f"Deleting: {keys}\n")
+    #cos.delete_objects(keys)
 
 def stage3():
-    pass
+    result = {}
+    for df in iterdf:
+        result.update(wc.word_count(df))
+    
+    result = sorted(result.items(), key=lambda x: x[1], reverse=True)
+
+    tokens = []
+    for key in result:
+        tokens.append(key)
+    comment_words += " ".join(tokens)+" "
+
+    wordcloud = WordCloud(width = 800, height = 800,
+                background_color ='white',
+                stopwords = stopwords,
+                min_font_size = 10).generate(comment_words)
+  
+    # plot the WordCloud image                       
+    plt.figure(figsize = (8, 8), facecolor = None)
+    plt.imshow(wordcloud)
+    plt.axis("off")
+    plt.tight_layout(pad = 0)
+    
+    plt.show()
+    
+    print(result)
 
 
 def delete_lithop_objects():
@@ -66,34 +98,13 @@ if __name__ == '__main__':
     api = tweepy.API(auth)
     
     
-    #fexec = lithops.FunctionExecutor(config=config,runtime='arppi/sd-lithops-custom-runtime-39:0.3')
-    fexec = lithops.FunctionExecutor(config=config,runtime='arppi/sd-lithops-custom-runtime-38:0.4')
+    fexec = lithops.FunctionExecutor(config=config,runtime='arppi/sd-lithops-custom-runtime-39:0.3')
+    #fexec = lithops.FunctionExecutor(config=config,runtime='arppi/sd-lithops-custom-runtime-38:0.4')
     
     cos = cosBackend(config)
     
-    stage1()
+    #stage1()
     stage2()
+    stage3()
     delete_lithop_objects()
-    #Stage 3
-    """
-    all_tweets = []
-    process_keys = cos.list_keys(prefix='preprocess')
    
-    for k in process_keys:
-        data = cos.get_object(k)
-        tw = data.decode()
-        for idk in tw.splitlines()[1:]:
-            all_tweets.append(idk.split(maxsplit=5))        #El camp de sentiment analysis es mostra junt amb el text
-            #countwords amb diccionari per cada paraula
-            #Fer el wordcloud
-            #Generar plots amb diferentes dates i afegir a notebooks
-            #Permetre buscar dades a partir de queries
-
-        print(all_tweets)
-    """        
-    
-        
-        
-
-
-

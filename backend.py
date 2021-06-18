@@ -29,6 +29,12 @@ class cosBackend:
     def get_object(self, key):
         return self.storage.get_object(self.config['lithops']['storage_bucket'], key)
 
+    def delete_object(self, key):
+        self.storage.delete_object(self.config['lithops']['storage_bucket'], key)
+
+    def delete_objects(self, keys: list):
+        self.storage.delete_objects(self.config['lithops']['storage_bucket'], keys)
+
 if __name__ == "__main__":
     from config.config import config
 

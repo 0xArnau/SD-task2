@@ -68,8 +68,11 @@ def stage3():
 
     tokens = []
     for key in result:
-        tokens.append(key)
+        tokens.append(key[0])
+    #print(tokens)
+    comment_words = ''
     comment_words += " ".join(tokens)+" "
+    stopwords = set(STOPWORDS)
 
     wordcloud = WordCloud(width = 800, height = 800,
                 background_color ='white',

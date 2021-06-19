@@ -9,6 +9,10 @@
 - pip install [matplotlib](https://pypi.org/project/matplotlib/)
 - pip install [wordcloud](https://pypi.org/project/wordcloud/)
 
+#### Types of errors:
+	tweepy.error.RateLimitError: [{'message': 'Rate limit exceeded', 'code': 88}]
+	-Solution: you have to wait a while to be able to run it again
+
 ## Task 2: Big Data challenge
 
 [This task](https://github.com/a-ppi/SD-task2/blob/master/pdf/hackathon.pdf) is related to the European Research project [CloudButon.eu](http://cloudbuton.eu/). The project is developing novel Cloud technologies aiming to democratize Big Data applications in the Cloud. The CloudButton project has created the lithops.cloud toolkit that will be used to implement the Big Data challenge.

@@ -60,7 +60,7 @@ def stage2():
     #print(f"Deleting: {keys}\n")
     #cos.delete_objects(keys)
 
-def stage3():
+def generate_word_cloud():
     result = {}
     for df in iterdf:
         result.update(wc.word_count(df))
@@ -69,10 +69,21 @@ def stage3():
 
     tokens = []
     for key in result:
-        tokens.append(key[0])
+        tokens.append(key[0].replace("\n\n", " "))
     #print(tokens)
     comment_words = ''
     comment_words += " ".join(tokens)+" "
+
+    #cos.put_object(prefix='words', name='', ext='txt', body=comment_words)
+    comment_words = ''
+    keys = cos.list_keys(prefix='words')
+    for key in keys:
+        comment_words += (cos
+            .get_object(key=key)
+            .decode()
+        )
+
+ 
     stopwords = set(STOPWORDS)
 
     wordcloud = WordCloud(width = 800, height = 800,
@@ -88,7 +99,7 @@ def stage3():
     
     plt.show()
     
-    print(result)
+    #print(result)
 
 
 def delete_lithop_objects():
@@ -109,6 +120,6 @@ if __name__ == '__main__':
     
     #stage1()
     stage2()
-    #stage3()
+    generate_word_cloud()
     delete_lithop_objects()
    

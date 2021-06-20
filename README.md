@@ -25,15 +25,15 @@ fexec = lithops.FunctionExecutor(
 ```
 - If you don't want to do stage 1, comment the line:
 ```python
-109  #stage1()
+108  #stage1()
 ```
 
 - If you don't want to do stage 2, comment the line:
 ```python
-110  #stage2()
+109  #stage2()
 ```
 
-Run `jupyter notebook` inside the  **SD-TASK2** folder, now in the borwser open * **notebook.ipybn**, you can run all cells at once or go one by one
+Run `jupyter notebook` inside the  **SD-TASK2** folder, now in the borwser open * **notebook.ipynb**, you can run all cells at once or go one by one
 
 ## Task 2: Big Data challenge
 

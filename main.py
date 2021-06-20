@@ -56,11 +56,11 @@ def stage2():
         iterdf.append(df_sentiment)
         cos.put_object(prefix='preprocess', name='', ext='csv',
                        body=df_sentiment.to_string())
-
-    iterdf[0].to_csv('data.csv')
     print(
         f"Deleting information that has already been processed:\n\t>> {keys}\n")
+
     cos.delete_objects(keys)
+    generate_word_cloud()
 
 
 def generate_word_cloud():
@@ -98,7 +98,8 @@ if __name__ == '__main__':
         config['tweepy']['ACCESS_TOKEN'], config['tweepy']['ACCESS_SECRET_TOKEN'])
     api = tweepy.API(auth)
 
-    # fexec = lithops.FunctionExecutor(config=config,runtime='arppi/sd-lithops-custom-runtime-39:0.3')    #python 39
+    # fexec = lithops.FunctionExecutor(
+    #    config=config, runtime='arppi/sd-lithops-custom-runtime-39:0.3')  # python 39
     fexec = lithops.FunctionExecutor(
         config=config, runtime='arppi/sd-lithops-custom-runtime-38:0.4')  # python 38
 
@@ -106,5 +107,4 @@ if __name__ == '__main__':
 
     stage1()
     stage2()
-    generate_word_cloud()
     delete_lithop_objects()

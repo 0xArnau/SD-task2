@@ -1,4 +1,4 @@
-#### Requirements:
+### Requirements:
 
 - pip install [awscli](https://github.com/aws/aws-cli) 
 - pip install [ibm-cos-sdk](https://ibm.github.io/ibm-cos-sdk-python/) 
@@ -8,10 +8,35 @@
 - pip install [nltk](https://www.nltk.org/install.html) [scikit-learn](https://scikit-learn.org/stable/install.html) [numpy](https://numpy.org/install/) [pandas](https://pandas.pydata.org/) [sklearn](https://pypi.org/project/sklearn/)
 - pip install [matplotlib](https://pypi.org/project/matplotlib/)
 - pip install [wordcloud](https://pypi.org/project/wordcloud/)
+- pip install [notebook](https://jupyter.org/install)
 
-#### Types of errors:
+### Types of errors:
 	tweepy.error.RateLimitError: [{'message': 'Rate limit exceeded', 'code': 88}]
 	-Solution: you have to wait a while to be able to run it again
+
+### Usage:
+
+ Run  python main.py
+
+- In lines 103 to 106 you must choose the version of the custom runtime, python38 or python39
+
+```javascript
+fexec = lithops.FunctionExecutor(
+	config=config, runtime='arppi/sd-lithops-custom-runtime-39:0.3')  # python 39
+fexec = lithops.FunctionExecutor(
+	config=config, runtime='arppi/sd-lithops-custom-runtime-38:0.4')  # python 38
+```
+- If you don't want to do stage 1, comment the line:
+```python
+109  #stage1()
+```
+
+- If you don't want to do stage 2, comment the line:
+```python
+110  #stage2()
+```
+
+Run `jupyter notebook` inside the  **SD-TASK2** folder, now in the borwser open * **notebook.ipybn**, you can run all cells at once or go one by one
 
 ## Task 2: Big Data challenge
 

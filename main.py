@@ -1,9 +1,9 @@
 from wordcloud import WordCloud, STOPWORDS
+import matplotlib.pyplot as plt
 
 import lithops
 import tweepy
 import pandas as pd
-import matplotlib.pyplot as plt
 
 from config.config import config
 from backend import cosBackend
@@ -61,6 +61,9 @@ def stage2():
     cos.delete_objects(keys)
 
 def generate_word_cloud():
+
+    cos.delete_object(key='words/0001.txt')
+
     result = {}
     for df in iterdf:
         result.update(wc.word_count(df))

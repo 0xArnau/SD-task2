@@ -13,7 +13,7 @@
 
 ### Usage:
 
- Run  python main.py
+ Run `python main.py`
 
 - In lines 103 to 106 you must choose the version of the custom runtime, python38 or python39
 

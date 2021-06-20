@@ -1,6 +1,3 @@
-from wordcloud import WordCloud, STOPWORDS
-import matplotlib.pyplot as plt
-
 import lithops
 import tweepy
 import pandas as pd
@@ -77,31 +74,6 @@ def generate_word_cloud():
     comment_words += " ".join(tokens)+" "
 
     cos.put_object(prefix='words', name='', ext='txt', body=comment_words)
-    """
-    comment_words = ''
-    keys = cos.list_keys(prefix='words')
-    for key in keys:
-        comment_words += (cos
-            .get_object(key=key)
-            .decode()
-        )
-
- 
-    stopwords = set(STOPWORDS)
-
-    wordcloud = WordCloud(width = 800, height = 800,
-                background_color ='white',
-                stopwords = stopwords,
-                min_font_size = 10).generate(comment_words)
-  
-    # plot the WordCloud image                       
-    plt.figure(figsize = (8, 8), facecolor = None)
-    plt.imshow(wordcloud)
-    plt.axis("off")
-    plt.tight_layout(pad = 0)
-    
-    plt.show()
-    """
 
 def delete_lithop_objects():
     '''

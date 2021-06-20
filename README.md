@@ -1,7 +1,4 @@
 ### Requirements:
-
-- pip install [awscli](https://github.com/aws/aws-cli) 
-- pip install [ibm-cos-sdk](https://ibm.github.io/ibm-cos-sdk-python/) 
 - pip install [lithops](https://lithops-cloud.github.io/getting-started/) 
 - pip install [tweepy](https://docs.tweepy.org/en/latest/index.html)
 - pip install [pandas](https://pandas.pydata.org/)
@@ -20,7 +17,7 @@
 
 - In lines 103 to 106 you must choose the version of the custom runtime, python38 or python39
 
-```javascript
+```python
 fexec = lithops.FunctionExecutor(
 	config=config, runtime='arppi/sd-lithops-custom-runtime-39:0.3')  # python 39
 fexec = lithops.FunctionExecutor(
